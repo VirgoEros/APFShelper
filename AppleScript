@@ -33,7 +33,7 @@ script deleteContainer
 			display dialog (" 
 請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
 例: disk1s2 ")
-			set GetDiskNumber to do shell script ("diskutil apfs list ")
+			set GetDiskNumber to do shell script ("diskutil list ")
 			display dialog GetDiskNumber
 			set DiskNumbering to ¬
 				display dialog {" 
@@ -59,7 +59,7 @@ script deleteVolume
 			display dialog (" 
 請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
 例: disk1s2 ")
-			set GetDiskNumber to do shell script ("diskutil apfs list ")
+			set GetDiskNumber to do shell script ("diskutil list ")
 			display dialog GetDiskNumber
 			set DiskNumbering to ¬
 				display dialog {" 

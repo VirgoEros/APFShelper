@@ -6,8 +6,8 @@ GitHub.com/VirgoEros/APFShelper/blob/master/AppleScript
 *)
 ----------------------------∞ 鱫鰰APFS助手 ∞------------------------------ON. 
 global Option, deleteContainer, deleteVolume, OpenScript, errmsg, errnbr
-global deleteContainer, GetDiskNumber, DiskNumbering, TerminalNotifier, errmsg, errnbr
-global deleteVolume, GetDiskNumber, DiskNumbering, TerminalNotifier, errmsg, errnbr
+global deleteContainer, GetDiskNumber, DiskNumbering, TerminalNotifier, DiskUtility, errmsg, errnbr
+global deleteVolume, GetDiskNumber, DiskNumbering, TerminalNotifier, DiskUtility, errmsg, errnbr
 global OpenScript, OpenAppScript, TerminalNotifier, errmsg, errnbr
 
 on run
@@ -45,6 +45,8 @@ script deleteContainer
 			set TerminalNotifier to POSIX path of (path to me as text) & ("Contents/MacOS/terminal-notifier")
 			set TerminalNotifier to quoted form of TerminalNotifier
 			do shell script (TerminalNotifier & " -title APFS已變鯁𩻟HFS磁鰈鰳唷💋")
+			set DiskUtility to quoted form of ("/Applications/Utilities/Disk Utility.app")
+			do shell script ("open " & DiskUtility)
 		end tell
 		continue quit
 	on error errmsg number errnbr
@@ -71,6 +73,8 @@ script deleteVolume
 			set TerminalNotifier to POSIX path of (path to me as text) & ("Contents/MacOS/terminal-notifier")
 			set TerminalNotifier to quoted form of TerminalNotifier
 			do shell script (TerminalNotifier & " -title 已刪除APFS磁鰈鰳唷💋")
+			set DiskUtility to quoted form of ("/Applications/Utilities/Disk Utility.app")
+			do shell script ("open " & DiskUtility)
 		end tell
 		continue quit
 	on error errmsg number errnbr

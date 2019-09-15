@@ -29,6 +29,9 @@ end run
 -------------------∞ 刪除APFS容器並將舊磁盤重新格式化為HFS ∞--------------------ON. 
 script deleteContainer
 	try
+		tell application "Finder" to display dialog (" 
+請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 
+例: disk1s2 ")
 		tell application "Terminal"
 			if not (exists window 1) then reopen
 			activate
@@ -45,6 +48,9 @@ end script
 --------------------------∞ 從其APFS容器中刪除APFS卷 ∞---------------------------ON. 
 script deleteVolume
 	try
+		tell application "Finder" to display dialog (" 
+請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 
+例: disk1s2 ")
 		tell application "Terminal"
 			if not (exists window 1) then reopen
 			activate
@@ -61,14 +67,12 @@ end script
 ------------------------ 開啟腳本 ------------------------ON. 
 script OpenScript
 	try
-		tell application "Finder"
-			set OpenAppScript to POSIX path of (path to me as text) & ("Contents/Resources/Scripts/main.scpt")
-			set OpenAppScript to quoted form of OpenAppScript
-			do shell script ("open " & OpenAppScript)
-			set TerminalNotifier to POSIX path of (path to me as text) & ("Contents/MacOS/terminal-notifier")
-			set TerminalNotifier to quoted form of TerminalNotifier
-			do shell script (TerminalNotifier & " -title 腳本已開啟鰳唷💋")
-		end tell
+		set OpenAppScript to POSIX path of (path to me as text) & ("Contents/Resources/Scripts/main.scpt")
+		set OpenAppScript to quoted form of OpenAppScript
+		do shell script ("open " & OpenAppScript)
+		set TerminalNotifier to POSIX path of (path to me as text) & ("Contents/MacOS/terminal-notifier")
+		set TerminalNotifier to quoted form of TerminalNotifier
+		do shell script (TerminalNotifier & " -title 腳本已開啟鰳唷💋")
 		continue quit
 	on error errmsg number errnbr
 		if errnbr = -128 then continue quit

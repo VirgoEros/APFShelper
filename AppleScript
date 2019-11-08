@@ -4,77 +4,71 @@ bit.ly/下載_鱫鰰APFS助手 ¬
 GitHub.com/VirgoEros/APFShelper/blob/master/AppleScript 
 *)
 ----------------------------∞ 鱫鰰APFS助手 ∞------------------------------ON. 
-global APFShelper, APFS_Option, deleteContainer, deleteVolume, OpenScript, errmsg, errnbr
-global deleteContainer, DiskutilList, InputDiskNumber, TerminalNotifier, errmsg, errnbr
-global deleteVolume, DiskutilList, InputDiskNumber, TerminalNotifier, errmsg, errnbr
+global APFS_Option, DiskutilList, InputDiskNumber, OpenScript, isDone, itemPath, itemProgress, TerminalNotifier, errmsg, errnbr
 global OpenScript, OpenAppScript, TerminalNotifier, errmsg, errnbr
 
 on run
 	try
-		tell application "Finder" to set {button returned:APFS_Option} to ¬
-			display dialog ("請嚫鱫的沝女鰰選擇 鱫鰰APFS助手 選項唷💋") buttons ¬
-				{"刪除APFS容器並將舊磁盤重新格式化為HFS", "從其APFS容器中刪除APFS卷", "開啟腳本"} with title ¬
-				{"鱫鰰APFS助手"}
-		if APFS_Option is "刪除APFS容器並將舊磁盤重新格式化為HFS" then run script deleteContainer
-		if APFS_Option is "從其APFS容器中刪除APFS卷" then run script deleteVolume
-		if APFS_Option is "開啟腳本" then run script OpenScript
+		tell application "Finder"
+			set {button returned:APFS_Option} to ¬
+				display dialog ("請嚫鱫的沝女鰰選擇 鱫鰰APFS助手 選項唷💋") buttons ¬
+					{"刪除APFS容器並將舊磁盤重新格式化為HFS", "從其APFS容器中刪除APFS卷", "開啟腳本"} with title ¬
+					{"鱫鰰APFS助手"}
+			if APFS_Option is "刪除APFS容器並將舊磁盤重新格式化為HFS" then
+				display dialog (" 
+請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
+例: disk1s2 ")
+				set DiskutilList to do shell script ("diskutil list ")
+				display dialog DiskutilList
+				set InputDiskNumber to display dialog "請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 " default answer "" buttons {"嗯哼。。好的唷💋"} default button 1 with title ¬
+					{"鱫鰰YouTube下載"}
+				set InputDiskNumber to (text returned of result)
+				if InputDiskNumber is "" then return continue quit
+				do shell script ("diskutil apfs deletecontainer " & InputDiskNumber)
+			end if
+			if APFS_Option is "從其APFS容器中刪除APFS卷" then
+				display dialog (" 
+請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
+例: disk1s2 ")
+				set DiskutilList to do shell script ("diskutil list ")
+				display dialog DiskutilList
+				set InputDiskNumber to display dialog "請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 " default answer "" buttons {"嗯哼。。好的唷💋"} default button 1 with title ¬
+					{"鱫鰰YouTube下載"}
+				set InputDiskNumber to (text returned of result)
+				if InputDiskNumber is "" then return continue quit
+				do shell script ("diskutil apfs deleteVolume " & InputDiskNumber)
+			end if
+			if APFS_Option is "開啟腳本" then run script OpenScript
+			delay 1
+			set isDone to false
+			set itemPath to ("diskutil")
+			set itemProgress to "ps ax | grep -v grep | grep " & itemPath
+			repeat while isDone is false
+				try
+					do shell script itemProgress
+					if the result contains itemPath then
+						delay 1
+					else
+						set isDone to true
+					end if
+				on error
+					set isDone to true
+				end try
+			end repeat
+			if isDone is true then
+				set TerminalNotifier to POSIX path of (path to me as text) ¬
+					& {"Contents/MacOS/terminal-notifier"}
+				set TerminalNotifier to quoted form of TerminalNotifier
+				(do shell script TerminalNotifier & " -title 已鯇成了唷💋")
+				do shell script ("open /Applications/Utilities/'Disk Utility.app'")
+			end if
+		end tell
+		continue quit
 	on error errmsg number errnbr
 		if errnbr = -128 then continue quit
 		continue quit
 	end try
 end run
--------------------∞ 刪除APFS容器並將舊磁盤重新格式化為HFS ∞--------------------ON. 
-script deleteContainer
-	try
-		tell application "Finder"
-			display dialog (" 
-請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
-例: disk1s2 ")
-			set DiskutilList to do shell script ("diskutil list ")
-			display dialog DiskutilList
-			set InputDiskNumber to display dialog "請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 " default answer "" buttons {"嗯哼。。好的唷💋"} default button 1 with title ¬
-				{"鱫鰰YouTube下載"}
-			set InputDiskNumber to (text returned of result)
-			if InputDiskNumber is "" then return continue quit
-			do shell script ("diskutil apfs deletecontainer " & InputDiskNumber)
-			do shell script ("open /Applications/Utilities/'Disk Utility.app'")
-		end tell
-		set TerminalNotifier to POSIX path of (path to me as text) ¬
-			& {"Contents/MacOS/terminal-notifier"}
-		set TerminalNotifier to quoted form of TerminalNotifier
-		(do shell script TerminalNotifier & " -title 已鯇成了唷💋")
-		continue quit
-	on error errmsg number errnbr
-		if errnbr = -128 then continue quit
-		continue quit
-	end try
-end script
---------------------------∞ 從其APFS容器中刪除APFS卷 ∞---------------------------ON. 
-script deleteVolume
-	try
-		tell application "Finder"
-			display dialog (" 
-請嚫鱫的沝女鰰記住欲變鯁之APFS的磁鰈號唷💋 
-例: disk1s2 ")
-			set DiskutilList to do shell script ("diskutil list ")
-			display dialog DiskutilList
-			set InputDiskNumber to display dialog "請嚫鱫的沝女鰰鰎魞欲變鯁之APFS的磁鰈號唷💋 " default answer "" buttons {"嗯哼。。好的唷💋"} default button 1 with title ¬
-				{"鱫鰰YouTube下載"}
-			set InputDiskNumber to (text returned of result)
-			if InputDiskNumber is "" then return continue quit
-			do shell script ("diskutil apfs deleteVolume " & InputDiskNumber)
-			do shell script ("open /Applications/Utilities/'Disk Utility.app'")
-		end tell
-		set TerminalNotifier to POSIX path of (path to me as text) ¬
-			& {"Contents/MacOS/terminal-notifier"}
-		set TerminalNotifier to quoted form of TerminalNotifier
-		(do shell script TerminalNotifier & " -title 已鯇成了唷💋")
-		continue quit
-	on error errmsg number errnbr
-		if errnbr = -128 then continue quit
-		continue quit
-	end try
-end script
 ------------------------ 開啟腳本 ------------------------ON. 
 script OpenScript
 	try
